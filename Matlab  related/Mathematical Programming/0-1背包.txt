@@ -1,0 +1,181 @@
+c=15;               % 定义背包的最大容量
+
+v= [2 3 6 47];     % 定义各个物品的体积 
+
+w= [10 5 816 9];   % 定义各个物品对应的价值 
+
+n=length(v);       % n为物品的数量 
+
+f=[];               %定义一个用于状态交换的矩阵 
+
+t=[];               %用于输出物品是否装入背包的状态   
+
+%1、判断第一个物品放或不放
+
+for j=1:15
+
+        if v(n)<=j 
+
+                f(n,j)=w(n) ; 
+
+        else 
+
+                f(n,j)=0; 
+
+        end 
+
+end  
+
+%2、判断下一个物品是否装入。引用递归公式f[i][i]=max{f[i-1][j],f[i-1][j-v[i]]+w[i]} 
+
+fori=n-1:-1:1 
+
+        for j=1:15 
+
+                if j<=v(i) 
+
+                        f(i,j)=f(i+1,j); 
+
+                else 
+
+                       f(i,j)=max{f(i+1,j),f(i+1,j-v(i))+w(i)}
+
+ 
+
+                        end 
+
+                end 
+
+        end 
+
+end 
+
+f
+
+%3、找出装入背包的所有物品  
+
+j=c; 
+
+fori=1:n-1 
+
+        if f(i,j)==f(i+1,j) 
+
+                t(i)=0; 
+
+        else 
+
+                t(i)=1; 
+
+                j=j-v(i); 
+
+        end 
+
+end 
+
+iff(n,j)==0 
+
+        t(n)=0; 
+
+else 
+
+        t(n)=1; 
+
+         
+
+end  
+
+t
+
+Undefinedvariable "max" or class "max".
+
+ 
+
+>>c=15;               % 定义背包的最大容量
+
+v= [2 3 6 47];     % 定义各个物品的体积 
+
+w= [10 5 816 9];   % 定义各个物品对应的价值 
+
+n=length(v);       % n为物品的数量 
+
+f=[];               %定义一个用于状态交换的矩阵 
+
+t=[];               %用于输出物品是否装入背包的状态   
+
+%1、判断第一个物品放或不放
+
+for j=1:15
+
+        if v(n)<=j 
+
+                f(n,j)=w(n) ; 
+
+        else 
+
+                f(n,j)=0; 
+
+        end 
+
+end  
+
+%2、判断下一个物品是否装入。引用递归公式f[i][i]=max{f[i-1][j],f[i-1][j-v[i]]+w[i]} 
+
+fori=n-1:-1:1 
+
+        for j=1:15 
+
+                if j<=v(i) 
+
+                        f(i,j)=f(i+1,j); 
+
+                else 
+
+                        iff(i+1,j)>f(i+1,j-v(i))+w(i) 
+
+                               f(i,j)=f(i+1,j); 
+
+                        else 
+
+                               f(i,j)=f(i+1,j-v(i))+w(i); 
+
+                        end 
+
+                end 
+
+        end 
+
+end 
+
+f
+
+%3、找出装入背包的所有物品  
+
+j=c; 
+
+fori=1:n-1 
+
+        if f(i,j)==f(i+1,j) 
+
+                t(i)=0; 
+
+        else 
+
+                t(i)=1; 
+
+                j=j-v(i); 
+
+        end 
+
+end 
+
+iff(n,j)==0 
+
+        t(n)=0; 
+
+else 
+
+        t(n)=1; 
+
+         
+
+end   

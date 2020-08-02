@@ -1,0 +1,50 @@
+#include<iostream>  
+using namespace std;  
+#define N 20  
+int m[N][N];  
+char num[N];  
+  
+int atoi(char arr[],int i,int j)  
+{  
+	int sum=0;  
+	while(i<=j)  
+	{  
+        sum = sum*10+arr[i]-'0';  //此处本来用了函数pow，然后wa了，一直找不到错在何处，  
+		i++;		//后来问师兄，才发现原来pow(double,int)   
+	} 			//的参数double会使结果又偏差，改掉后就ac了  
+    return sum;  
+}  
+  
+int main()  
+{  
+	int n,k,i,j,l,max,flag;  
+	while(cin>>n>>k)  
+	{  
+		for(i=1;i<=n;i++)  
+			cin>>num[i];  
+		m[1][1]=num[1]-'0';  
+		for(i=2;i<=n;i++)  
+			m[i][1]=m[i-1][1]*10+(num[i]-'0'); //初始化第一列  
+		for(j=2;j<=k;j++)//按列进行初始化  
+		{  
+			max=-1;  
+			for(i=1;i<=n;i++)  
+			{  
+				if(j>i)  
+					m[i][j]=0;  
+				else  
+				{  
+					for(l=j-1;l<=i-1;l++)  
+					{  
+						flag=m[l][j-1]*atoi(num,l+1,i);  
+						if(flag>max)  
+						max=flag;  
+					}  
+					m[i][j]=max;  
+				}  
+			}  
+		}  
+		cout<<m[n][k]<<endl;  
+	}  
+	return 0;  
+}  

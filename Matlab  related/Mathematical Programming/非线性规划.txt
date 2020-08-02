@@ -1,0 +1,11 @@
+    [X,FVAL,EXITFLAG,OUTPUT,LAMBDA] = fmincon(FUN,X0,A,B,Aeq,Beq,LB,UB,NONLCON) % 统一形式
+    [X,FVAL,EXITFLAG,OUTPUT,LAMBDA] = fmincon(F,X0,A,B,Aeq,Beq,LB,UB,NONLCON) % 线性目标函数，包含非线性约束
+    [X,FVAL,EXITFLAG,OUTPUT,LAMBDA] = fmincon(@(X)MYOBJ(X),X0,A,B,Aeq,Beq,LB,UB,@(X)MYCON(X)) % 自己定义目标函数和非线性约束函数
+    % 目标函数
+    function F = MYOBJ(X)
+    	F = ......
+    % 非线性约束函数
+    function [G,Heq] = MYCON(X)
+    	G = ..... % 非线性不等式约束条件
+    	Heq = ..... % 非线性等式约束条件
+
