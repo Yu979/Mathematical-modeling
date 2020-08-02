@@ -1,0 +1,37 @@
+% 人口预测模型
+
+% 对自然界生物数量的预测有一定参考性
+
+%renkouyuce.m     我国人口增长规律观测
+%           C    年份和人口数据矩阵
+%         year    年份
+%         num    人口
+%           a    2011年预测人口数
+%           b    2012年预测人口数
+ 
+renkou=fopen('renkoushuju.txt');  %打开数据总文件
+A=textscan(renkou,'%f %f');       %把每一列的数据读入到读入到单元数组A中
+C=[A{1} A{2}];                    %从单元数组R中提取每列数据赋值给矩阵C
+n=max(size(C));                   %确定读入数据的年份数目
+year=C(:,1);num=C(:,2);           %赋值
+ 
+%进行2阶、4阶、5阶拟合
+p2= polyfit(year,num,2)        %2阶拟合
+p4= polyfit(year,num,4)        %4阶拟合
+p5= polyfit(year,num,5)        %5阶拟合
+R5= dot(num-polyval(p5,year),num-polyval(p5,year)) %计算拟合残差
+R4= dot(num-polyval(p4,year),num-polyval(p4,year)) %计算拟合残差
+R2= dot(num-polyval(p2,year),num-polyval(p2,year)) %计算拟合残差
+ 
+%绘制原始数据和拟合曲线图
+hold on;
+xlabel('year','color','b');     %设置横坐标名
+ylabel('num','color','b');      %设置纵坐标名
+title('1990-2010人口增长曲线','color','m');   %设置标题
+grid on      %网格线
+plot(year,num,'r*',year,polyval(p2,year),year,polyval(p4,year),year,polyval(p5,year)) 
+legend('我国人口数量','2阶拟合', '4阶拟合','5阶拟合')
+ 
+%人口预测
+a=polyval(p5,21)    %预测2011年人口数量
+b=polyval(p5,22)    %预测2012年人口数量

@@ -1,0 +1,38 @@
+% MATLAB的0-1规划函数bintprog是针对下述0-1规划:
+% min z= f*k
+% s.t: A*x≤b
+%      aeq*x=beq
+%      x=[x1,x2,...,xn]
+%  	   xi=0or1,=1,2,...,n
+
+% 解0-1规划(2.1)的0-1规划函数 bintprog表述为
+% x, fv, exitflag, output]=bintprog(f, A, b, aeq, beq)
+
+% 输入部分:
+% f为目标函数,实为目标函数的系数。
+% A为(2.1)中的不等式约束矩阵
+% b为(2.1)中的不等式约束向量
+% aeq为(2.1)中的等式约束矩阵
+% beq(2.1)中的等式约束向量
+
+% 输出部分:
+% x为最优解fval为最优值
+% exitflag为输出标志 exitflag=l,有最优解 exitflag-0,迭代次数超过设定次数
+% exitflag-=-2,约東区域不可行 exitflag--3,问题无解
+% output,表明算法和迭代情况
+% 如果不需要了解迭代情况和存储情况,可将0-1规划函数 bintprog写成
+% [x, fv, ex]=linprog(f, A, b, aeq, beq)
+
+% 求解以下0-1规划：
+% max z=x1+2x2+2x3-6x-4x5
+% s.t 3x1+2x2-x3+x4+5x2≤5
+%     2x1+4x2-2x3-x4-2x5≤5
+%     x=0 or 1(i=1,2,...,5)
+
+f=[1,2,2,-6,-4];
+A=[3,2,-1,1,2;2,4,2,-1,2];
+b=[5,5]
+[x,fv,ex]=bintprog(f, A, b, [],[])
+
+% 求解如下
+% ex=1,f/v=-5,X=[1,1,1,0];

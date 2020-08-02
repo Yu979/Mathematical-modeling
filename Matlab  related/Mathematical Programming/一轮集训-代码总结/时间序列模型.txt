@@ -1,0 +1,46 @@
+% 时间序列预测
+% 输入数据：需要进行预测的原始数据
+% 输出结果：最终预测值
+
+% 使用案例：公司未来发展分析预测、经济学方向预测
+
+
+A = [970279
+1259308
+1127571
+1163959
+1169540
+1076938
+991350
+953275
+951508
+904434
+889381
+864015
+836236
+]';
+%判断是否平稳，使用ADF检验
+h = adftest(A)
+%B = dtrend(A)
+B = diff(A)
+H = adftest(B)
+figure(1)
+autocorr(B)
+figure(2)
+parcorr(B)
+x = A;
+w = B;
+n = 2;
+s = 1;
+m1 = length(A); %原始的数据的个数
+for i = s+1:m1
+	y(i-s) = x(i) - x(i-s);%进行周期差分变换
+end
+ToEstMd = arima('ARLags',1,'MALags',1:1,'Constant',0);%指定模型的结构
+[EstMd,EstParamCov,LogL,info] = estimate(ToEstMd,w');%模型拟合 
+w_Forecast = forecast(EstMd,n,'Y0',w');
+yhat = y(end) + cumsum(w_Forecast); %一阶差分的还原值
+for j = 1:n
+	x(m1 + j) = yhat(j) + x(m1+j-s); %x的预测值
+end
+x(1:end)

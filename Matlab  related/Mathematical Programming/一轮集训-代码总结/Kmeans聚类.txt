@@ -1,0 +1,19 @@
+% 聚类及结果展示
+
+A= Tdata(:,:,40)
+X=A(:);
+[idx, ctr]=kmeans(X, 7);
+figure
+F1=plot(find(idx==1),A(idx==j1), "r: *",...
+	find(idx==2),A(idx==2),"g:*",...
+	find(idx==3),A(idx==3),"b:*",...
+	find(idx==4),A(idx==4),"c:*",...
+	find(idx==5),A(idx==5),"m:*",...
+	find(idx==6),A(idx==6),"y:*",...
+	find(idx==7),A(idx==7),"k:*");
+set(gca, 'linewidth, 1);
+set(gca, 'box, 'on);
+set(F1, ' linewidth, 1, 'Markersize,7)
+xlabel('编号');
+ylabel('温度);
+title('聚类结果);
